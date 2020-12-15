@@ -113,8 +113,8 @@ unsigned int calculateAbsoluteDifferenceInMinutes(const unsigned int& hours1, co
 
 void printAbsoluteDifference(unsigned int& absoluteDifferenceInMinutes) {
     unsigned int absoluteDifferenceHours = absoluteDifferenceInMinutes / 60;
-    unsigned int absoluteDifferenceMonutes = absoluteDifferenceInMinutes % 60;
-    printTime(absoluteDifferenceHours, absoluteDifferenceMonutes);
+    unsigned int absoluteDifferenceMinutes = absoluteDifferenceInMinutes % 60;
+    printTime(absoluteDifferenceHours, absoluteDifferenceMinutes);
 }
 
 int main() {
