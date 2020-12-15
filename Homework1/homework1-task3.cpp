@@ -272,7 +272,6 @@ unsigned int calculateAbsoluteTimeDifferenceInSeconds(const unsigned int& hours1
     }
 
     return timeInSeconds1 - timeInSeconds2;
-    
 }
 
 void printTime(const unsigned int& hours, const unsigned int& minutes, const unsigned& seconds) {
@@ -285,7 +284,7 @@ void printTime(const unsigned int& hours, const unsigned int& minutes, const uns
 
 void printAbsoluteDifference(unsigned int& absoluteDifferenceInSeconds) {
     unsigned int absoluteDifferenceHours    = (absoluteDifferenceInSeconds / 60) / 60;
-    unsigned int absoluteDifferenceMinutes  = absoluteDifferenceHours / 60;
+    unsigned int absoluteDifferenceMinutes  = absoluteDifferenceInSeconds / 60;
     unsigned int absoluteDifferenceSeconds  = absoluteDifferenceInSeconds % 60;
     
     printTime(absoluteDifferenceHours, absoluteDifferenceMinutes, absoluteDifferenceSeconds);
@@ -293,10 +292,13 @@ void printAbsoluteDifference(unsigned int& absoluteDifferenceInSeconds) {
 
 int main() {
 
-    string inputDate1   = "22.10.2020";
-    string inputTime1   = "00:00:00";
-    string inputDate2   = "22.10.2019";
-    string inputTime2   = "01:00:00";
+    string inputDate1;
+    string inputTime1;
+    cin >> inputDate1 >> inputTime1;
+
+    string inputDate2;
+    string inputTime2;
+    cin >> inputDate2 >> inputTime2;
     
     vector<string> tokenizedDate1   = stringToVectorOfTokens(inputDate1);
     vector<unsigned int> dataDate1  = TokensToUnsignedInts(tokenizedDate1);
