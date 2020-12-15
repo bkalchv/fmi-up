@@ -1,3 +1,8 @@
+// Да се напише програма, която прочита от стандартния вход две точки във времето във формат 
+// dd.mm.yyyy HH:MM:SS (незадължително с водещи нули) и извежда на стандартния изход един ред, съдържащ тяхната разлика
+// във формат [days-]HH:MM:SS - ако броят дни е 0, то той да не се извежда и HH, MM, SS са задължително с водещи нули.
+// Ако някоя от въведените точки във времето не е валидна, програмата да изведе един ред със съобщение „Invalid date/time“.
+
 #include <iostream>
 #include <string>
 #include <vector>
@@ -335,9 +340,16 @@ int main() {
     bool isValidInput2 = isValidDate(date2Date, date2Month, date2Year) && isValidTime(time2Hours, time2Minutes, time2Seconds);
 
     if (isValidInput1 && isValidInput2) 
-    {
-        cout << calculateAbsoluteDateDifferenceInDays(date1Date, date1Month, date1Year, date2Date, date2Month, date2Year) << "-";
+    {   
+        unsigned int absoluteDateDifferenceInDays = calculateAbsoluteDateDifferenceInDays(date1Date, date1Month, date1Year, date2Date, date2Month, date2Year);
+
         unsigned int absoluteTimeDifferenceInSeconds = calculateAbsoluteTimeDifferenceInSeconds(time1Hours, time1Minutes, time1Seconds, time2Hours, time2Minutes, time2Seconds);
+
+        if (absoluteDateDifferenceInDays != 0) 
+        {
+        cout << absoluteDateDifferenceInDays << "-";
+        }
+
         printAbsoluteDifference(absoluteTimeDifferenceInSeconds);
         cout << endl;
     }
