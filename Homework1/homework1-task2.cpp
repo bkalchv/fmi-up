@@ -13,11 +13,20 @@
 
 using namespace std;
 
+const unsigned int INPUT_DATA_BITS_LENGTH           = 13;
+const unsigned int INPUT_DATA_BITS_LAST_IDX         = 12;
+const unsigned int HOURS_FIRST_DIGIT_BIT_IDX        = 1;
+const unsigned int HOURS_FIRST_DIGIT_BIT_LAST_IDX   = 2;
+const unsigned int HOURS_SECOND_DIGIT_BIT_IDX       = 3;
+const unsigned int HOURS_SECOND_DIGIT_BIT_LAST_IDX  = 6;
+const unsigned int MINUTES_BITS_IDX                 = 7;
+const unsigned int MINUTES_BITS_LAST_IDX            = 12;
+
 int* toBinaryArray(int decimalTime) {
 
-    int* binaryTimeArray = new (nothrow) int[13];
+    int* binaryTimeArray = new (nothrow) int[INPUT_DATA_BITS_LENGTH];
 
-    int* binaryTimeArrayReversed = new (nothrow) int[13];
+    int* binaryTimeArrayReversed = new (nothrow) int[INPUT_DATA_BITS_LENGTH];
 
     for (unsigned int i{0}; decimalTime > 0; ++i)
     {
@@ -25,9 +34,9 @@ int* toBinaryArray(int decimalTime) {
         decimalTime = decimalTime / 2;
     }
 
-    for (int z{12}; z >= 0; --z) 
+    for (int z{INPUT_DATA_BITS_LAST_IDX}; z >= 0; --z) 
     {  
-        binaryTimeArray[z] = binaryTimeArrayReversed[12-z]; 
+        binaryTimeArray[z] = binaryTimeArrayReversed[INPUT_DATA_BITS_LAST_IDX-z]; 
     }
 
     return binaryTimeArray;
@@ -35,7 +44,7 @@ int* toBinaryArray(int decimalTime) {
 
 void printBinaryTimeArray(int *(&binaryTimeArray)) {
     
-    for (size_t i{0}; i < 13; ++i) 
+    for (size_t i{0}; i < INPUT_DATA_BITS_LENGTH; ++i) 
     {
         cout << binaryTimeArray[i];
         if ( i == 0 || i == 6) 
@@ -50,18 +59,18 @@ unsigned int calculateHours(int *(&binaryTimeArray)) {
 
     unsigned int result = 0;
 
-    for (size_t i{3}; i <= 6 ; ++i) 
+    for (size_t i{HOURS_SECOND_DIGIT_BIT_IDX}; i <= HOURS_SECOND_DIGIT_BIT_LAST_IDX; ++i) 
     {   
         if (binaryTimeArray[i] != 0) {
-            result += pow(2, 6 - i);
+            result += pow(2, HOURS_SECOND_DIGIT_BIT_LAST_IDX - i);
         }
     }
 
-    for (size_t z{1}; z <= 2; ++z) 
+    for (size_t z{HOURS_FIRST_DIGIT_BIT_IDX}; z <= HOURS_FIRST_DIGIT_BIT_LAST_IDX; ++z) 
     {
         if (binaryTimeArray[z] != 0) 
         {
-            result += 10*pow(2, 2 - z);
+            result += 10*pow(2, HOURS_FIRST_DIGIT_BIT_LAST_IDX - z);
         }
     }
 
@@ -72,10 +81,10 @@ unsigned int calculateMinutes(int *(&binaryTimeArray)) {
 
     unsigned int result = 0;
 
-    for (size_t i{7}; i <= 12 ; ++i) 
+    for (size_t i{MINUTES_BITS_IDX}; i <= MINUTES_BITS_LAST_IDX ; ++i) 
     {   
         if (binaryTimeArray[i] != 0) {
-            result += pow(2, 12 - i);
+            result += pow(2, MINUTES_BITS_LAST_IDX - i);
         }
     }    
 
