@@ -4,8 +4,6 @@
 // Ако правоъгълниците нямат обща част, приемаме лицето за нула.
 
 #include <iostream>
-#include <vector>
-
 
 using namespace std;
 
@@ -138,8 +136,7 @@ int main()
         cout << "do NOT overlay\n";
     }
     
-    cout << "Area of overlay: ";
-    cout << calculateOverlayArea(x1, y1, length1, height1, x2, y2, length2, height2) << endl; 
+    cout << "Area of overlay: " << calculateOverlayArea(x1, y1, length1, height1, x2, y2, length2, height2) << endl; 
 
     return 0;
 }

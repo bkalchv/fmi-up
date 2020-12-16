@@ -4,7 +4,6 @@
 // Ако правоъгълниците нямат обща част, приемаме лицето за нула.
 
 #include <iostream>
-#include <vector>
 
 using namespace std;
 
@@ -51,13 +50,6 @@ struct Rectangle
         return Point(mostDLP.x + length, mostDLP.y + height);
     }
 };
-
-// vector<Point> getAllPoints(const Rectangle& rec) {
-//     vector<Point> result;
-//     result.reserve(4);
-//     result = {rec.mostDLP, rec.calculateMostDRP() , rec.calculateMostULP(),  rec.calculateMostURP()};
-//     return result;
-// }
 
 bool doOverlay(const Rectangle& rec1, const Rectangle& rec2) {
     
