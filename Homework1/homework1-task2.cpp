@@ -8,7 +8,6 @@
 // За часовете в 12 часов формат приемете, че са час преди обяд (AM). 
 // При невалидно време и/или формат изведете подходящо съобщение.
 
-
 #include <iostream>
 #include <cmath>
 
@@ -88,6 +87,7 @@ bool isIn24hFormat(int *(&binaryTimeArray)) {
 }
 
 bool isInValidFormat(int *(&binaryTimeArray)) {
+    
     if (!isIn24hFormat(binaryTimeArray) && calculateHours(binaryTimeArray) <= 12) 
     {
         return true;
@@ -107,6 +107,12 @@ void printTime(const unsigned int& hours, const unsigned int& minutes) {
     minutes < 10 ? cout << "0" <<  minutes : cout <<  minutes;
 }
 
+void printTimeDifference(const unsigned int& hours, const unsigned int& minutes) {
+    cout << "diff: " << hours << ":";
+    minutes < 10 ? cout << "0" <<  minutes : cout <<  minutes;
+    cout << endl;
+}
+
 void printExplaination(int wholeNumber, int *(&binaryTimeArray)) {
     cout << wholeNumber << " -> ";
     printBinaryTimeArray(binaryTimeArray);
@@ -118,13 +124,13 @@ void printExplaination(int wholeNumber, int *(&binaryTimeArray)) {
 unsigned int calculateAbsoluteDifferenceInMinutes(const unsigned int& hours1, const unsigned int& minutes1, const unsigned int& hours2, const unsigned int& minutes2) {
     unsigned int timeInMinutes1 = hours1 * 60 + minutes1;
     unsigned int timeInMinutes2 = hours2 * 60 + minutes2;
-    return abs((double) timeInMinutes1 - (double) timeInMinutes2);
+    return abs((int) timeInMinutes1 - (int) timeInMinutes2);
 }
 
 void printAbsoluteDifference(unsigned int& absoluteDifferenceInMinutes) {
     unsigned int absoluteDifferenceHours = absoluteDifferenceInMinutes / 60;
     unsigned int absoluteDifferenceMinutes = absoluteDifferenceInMinutes % 60;
-    printTime(absoluteDifferenceHours, absoluteDifferenceMinutes);
+    printTimeDifference(absoluteDifferenceHours, absoluteDifferenceMinutes);
 }
 
 int main() {
@@ -147,31 +153,28 @@ int main() {
         printTime(hours2, minutes2);
         cout << endl;
         unsigned int absoluteDifferenceInMinutes = calculateAbsoluteDifferenceInMinutes(hours1, minutes1, hours2, minutes2);
-        cout << "diff: ";
         printAbsoluteDifference(absoluteDifferenceInMinutes);
-        cout << endl;
     }
     else 
     {
         cout << "invalid format" << endl;
-        cout << "Do you want to see why? (y/n)" << endl;
-        char answer;
-        cin >> answer;
-        if (answer == 'y')
-        {
-            if (!isInValidFormat(binaryTimeArray1)) 
-            {
-                printExplaination(wholeNumber1, binaryTimeArray1);
-            }
+        // cout << "Do you want to see why? (y/n)" << endl;
+        // char answer;
+        // cin >> answer;
+        // if (answer == 'y')
+        // {
+        //     if (!isInValidFormat(binaryTimeArray1)) 
+        //     {
+        //         printExplaination(wholeNumber1, binaryTimeArray1);
+        //     }
             
-            if (!isInValidFormat(binaryTimeArray2))
-            {
-                printExplaination(wholeNumber2, binaryTimeArray2);
-            }
-        }
+        //     if (!isInValidFormat(binaryTimeArray2))
+        //     {
+        //         printExplaination(wholeNumber2, binaryTimeArray2);
+        //     }
+        // }
     }
  
-
     delete[] binaryTimeArray1;
     delete[] binaryTimeArray2;
 }
