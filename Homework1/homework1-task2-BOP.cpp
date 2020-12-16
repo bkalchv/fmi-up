@@ -90,10 +90,10 @@ void printDifference(unsigned int wholeNumber1, unsigned int wholeNumber2) {
 
 int main() {
 
-    unsigned int wholeNumber1{5000};
-    unsigned int wholeNumber2{1099};
+    unsigned int wholeNumber1;
+    unsigned int wholeNumber2;
 
-    //cin >> wholeNumber1 >> wholeNumber2;
+    cin >> wholeNumber1 >> wholeNumber2;
 
     if (isInValidFormat(wholeNumber1) && isInValidFormat(wholeNumber2)) 
     {
