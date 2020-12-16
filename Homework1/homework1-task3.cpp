@@ -5,12 +5,11 @@
 
 #include <iostream>
 #include <string>
-#include <vector>
 #include <cmath>
 
 using namespace std;
 
-vector<string> stringToVectorOfTokens(string str) {
+string* stringToArrayOfTokens(string str) {
 
     char delimiter;
 
@@ -24,32 +23,33 @@ vector<string> stringToVectorOfTokens(string str) {
         delimiter = ':';
     }
 
-    vector<string> result;
+    string* result = new string[3];
 
     size_t pos = str.find(delimiter);
 
     if (pos != string::npos)
     {
-        for (; pos != string::npos; pos = str.find(delimiter)) 
+        for (size_t idx{0}; pos != string::npos && idx < 2; pos = str.find(delimiter), ++idx) 
         {
             string token;
             token = str.substr(0, pos);
-            result.push_back(token);
+            result[idx] = token;
             str.erase(0, pos + 1);
         }
     }
-    result.push_back(str); // last token
+    result[2] = str; // last token
 
     return result;
 }
 
-vector<unsigned int> TokensToUnsignedInts(const vector<string>& vectorOfTokens) {
+unsigned int* TokensToUnsignedInts(string* (&vectorOfTokens)) {
 
-    vector<unsigned int> result;
+    unsigned int* result = new unsigned int[3];
 
-    for (const string& str : vectorOfTokens) 
-    {
-        result.push_back(stoi(str));
+    for (size_t i{0}; i < 3; ++i) 
+    {   
+        string temp = vectorOfTokens[i];
+        result[i] = stoul(temp);
     }
 
     return result;
@@ -89,7 +89,7 @@ bool isValidDate(const unsigned int& date, const unsigned int& month, const unsi
         return false;
     }
 
-    if (isLeapYear(year) && month == 2 && date != 29)
+    if (isLeapYear(year) && month == 2 && date > 29)
     {
         //throw std::invalid_argument("In an leap year, february has 29 days. Invalid date input!");
         return false;
@@ -135,8 +135,9 @@ bool isValidTime(const unsigned int& hours, const unsigned int& minutes, const u
     return true;
 }
 
-vector<unsigned int>& getLaterDate(vector<unsigned int>& date1, vector<unsigned int>& date2) {
-    for (size_t i{date1.size()}; i > 0; --i) {
+unsigned int*& getLaterDate(unsigned int* (&date1), unsigned int* (&date2)) {
+
+    for (size_t i{3}; i > 0; --i) {
         
         if (date1[i-1] == date2[i-1]) {
             continue;
@@ -287,11 +288,11 @@ void printTime(const unsigned int& hours, const unsigned int& minutes, const uns
     seconds < 10 ? cout << "0" <<  seconds : cout <<  seconds;
 }
 
-void printAbsoluteDifference(unsigned int& absoluteDifferenceInSeconds) {
+void printAbsoluteDifference(const unsigned int& absoluteDifferenceInSeconds) {
     unsigned int absoluteDifferenceHours    = (absoluteDifferenceInSeconds / 60) / 60;
     unsigned int absoluteDifferenceMinutes  = absoluteDifferenceInSeconds / 60;
     unsigned int absoluteDifferenceSeconds  = absoluteDifferenceInSeconds % 60;
-    
+
     printTime(absoluteDifferenceHours, absoluteDifferenceMinutes, absoluteDifferenceSeconds);
 }
 
@@ -305,15 +306,15 @@ int main() {
     string inputTime2;
     cin >> inputDate2 >> inputTime2;
     
-    vector<string> tokenizedDate1   = stringToVectorOfTokens(inputDate1);
-    vector<unsigned int> dataDate1  = TokensToUnsignedInts(tokenizedDate1);
-    vector<string> tokenizedTime1   = stringToVectorOfTokens(inputTime1);
-    vector<unsigned int> dataTime1  = TokensToUnsignedInts(tokenizedTime1);
+    string* tokenizedDate1          = stringToArrayOfTokens(inputDate1);
+    unsigned int* dataDate1         = TokensToUnsignedInts(tokenizedDate1);
+    string* tokenizedTime1          = stringToArrayOfTokens(inputTime1);
+    unsigned int* dataTime1         = TokensToUnsignedInts(tokenizedTime1);
 
-    vector<string> tokenizedDate2   = stringToVectorOfTokens(inputDate2);
-    vector<unsigned int> dataDate2  = TokensToUnsignedInts(tokenizedDate2);
-    vector<string> tokenizedTime2   = stringToVectorOfTokens(inputTime2);
-    vector<unsigned int> dataTime2  = TokensToUnsignedInts(tokenizedTime2);
+    string* tokenizedDate2          = stringToArrayOfTokens(inputDate2);
+    unsigned int* dataDate2         = TokensToUnsignedInts(tokenizedDate2);
+    string* tokenizedTime2          = stringToArrayOfTokens(inputTime2);
+    unsigned int* dataTime2         = TokensToUnsignedInts(tokenizedTime2);
 
     if (getLaterDate(dataDate1, dataDate2) == dataDate2) 
     {
@@ -358,6 +359,10 @@ int main() {
         cout << "Invalid date/time" << endl;
     }
     
+    delete[] tokenizedDate1;
+    delete[] dataDate1;
+    delete[] tokenizedDate2;
+    delete[] dataDate2;
 
     return 0;
 }
