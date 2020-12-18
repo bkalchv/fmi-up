@@ -333,7 +333,7 @@ unsigned int calculateAbsoluteDateDifferenceInDays(const unsigned int& date1, co
     return 0;
 }
 
-unsigned int calculateAbsoluteTimeDifferenceInSeconds(unsigned int hours1, unsigned int minutes1, unsigned int seconds1, unsigned int hours2, unsigned int minutes2, unsigned int seconds2, unsigned int& daysDifference) {
+unsigned int calculateTimeDifferenceInSeconds(unsigned int hours1, unsigned int minutes1, unsigned int seconds1, unsigned int hours2, unsigned int minutes2, unsigned int seconds2, unsigned int& daysDifference) {
     int timeInSeconds1 = SECONDS_IN_A_MINUTE * (hours1 * MINUTES_IN_AN_HOUR + minutes1) + seconds1;
     int timeInSeconds2 = SECONDS_IN_A_MINUTE * (hours2 * MINUTES_IN_AN_HOUR + minutes2) + seconds2;
     int difference = timeInSeconds1 - timeInSeconds2;
@@ -436,11 +436,11 @@ int main() {
     {   
         unsigned int absoluteDateDifferenceInDays = calculateAbsoluteDateDifferenceInDays(date1Date, date1Month, date1Year, date2Date, date2Month, date2Year);
 
-        unsigned int absoluteTimeDifferenceInSeconds = calculateAbsoluteTimeDifferenceInSeconds(time1Hours, time1Minutes, time1Seconds, time2Hours, time2Minutes, time2Seconds, absoluteDateDifferenceInDays);
+        unsigned int timeDifferenceInSeconds = calculateTimeDifferenceInSeconds(time1Hours, time1Minutes, time1Seconds, time2Hours, time2Minutes, time2Seconds, absoluteDateDifferenceInDays);
 
-        while (absoluteTimeDifferenceInSeconds % (HOURS_IN_A_DAY * SECONDS_IN_AN_HOUR) != absoluteTimeDifferenceInSeconds && absoluteDateDifferenceInDays != 0) 
+        while (timeDifferenceInSeconds % (HOURS_IN_A_DAY * SECONDS_IN_AN_HOUR) != timeDifferenceInSeconds && absoluteDateDifferenceInDays != 0) 
         {
-            absoluteTimeDifferenceInSeconds -= (HOURS_IN_A_DAY * SECONDS_IN_AN_HOUR);
+            timeDifferenceInSeconds -= (HOURS_IN_A_DAY * SECONDS_IN_AN_HOUR);
             ++absoluteDateDifferenceInDays;
         }
 
@@ -449,7 +449,7 @@ int main() {
         cout << absoluteDateDifferenceInDays << "-";
         }      
 
-        printAbsoluteDifference(absoluteTimeDifferenceInSeconds);
+        printAbsoluteDifference(timeDifferenceInSeconds);
         cout << endl;
     }
     else
