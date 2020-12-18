@@ -474,5 +474,15 @@ int main() {
         cout << "Invalid date/time" << endl;
     }
 
+    delete[] tokenizedDate1;
+    delete[] tokenizedDate2;
+    delete[] tokenizedTime1;
+    delete[] tokenizedTime2;
+
+    delete[] dataDate1;
+    delete[] dataTime1;
+    delete[] dataDate2;
+    delete[] dataTime2;
+
     return 0;
 }
