@@ -4,12 +4,15 @@
 // Ако някоя от въведените точки във времето не е валидна, програмата да изведе един ред със съобщение „Invalid date/time“.
 
 #include <iostream>
-#include <string>
 #include <cmath>
+#include <cstring>
 
 using namespace std;
 
+const unsigned int MAX_INPUT_DATE_SIZE  = 11;
+const unsigned int MAX_INPUT_TIME_SIZE  = 9;
 const unsigned int TOKENS_AMOUNT        = 3;
+const unsigned int MAX_TOKENS_LENGTH    = 4;
 const unsigned int DATE_INDEX           = 0;
 const unsigned int MONTH_INDEX          = 1;
 const unsigned int YEAR_INDEX           = 2;
@@ -25,46 +28,74 @@ const unsigned int SECONDS_IN_A_MINUTE  = 60;
 const unsigned int MONTHS_IN_AN_YEAR    = 12;
 const unsigned int DAYS_IN_AN_YEAR      = 365;
 
-string* stringToArrayOfTokens(string str) {
-
-    char delimiter;
-
-    if (str.find('.') != std::string::npos)
+char* subString(const char* str, size_t fromIdx, size_t toIdx) {
+    
+    if (fromIdx < toIdx && fromIdx > 0 && toIdx > 0) 
     {
-        delimiter = '.';
-    }
+        char* result = new char[toIdx - fromIdx];
 
-    if (str.find(':') != string::npos)
-    {
-        delimiter = ':';
-    }
-
-    string* result = new string[3];
-
-    size_t pos = str.find(delimiter);
-
-    if (pos != string::npos)
-    {
-        for (size_t idx{0}; pos != string::npos && idx < 2; pos = str.find(delimiter), ++idx) 
+        for (size_t i{fromIdx}; i < toIdx; ++i)
         {
-            string token;
-            token = str.substr(0, pos);
-            result[idx] = token;
-            str.erase(0, pos + 1);
+            result[i - fromIdx] = str[i];
         }
+
+        return result;
     }
-    result[2] = str; // last token
+
+    return nullptr;
+}
+
+int find(const char* str, char ch) {
+
+    int idx{0};
+    for (char c = *str; c; c = *++str) 
+    {
+        if (ch == c) {
+            return idx;
+        }
+        ++idx;
+    }
+
+    return -1;
+}
+
+char** stringToArrayOfTokens(char* str) {
+
+    char delimiter[1];
+
+    if (find(str,'.') != -1)
+    {
+        delimiter[0] = '.';
+    }
+
+    if (find(str,':') != -1)
+    {
+        delimiter[0] = ':';
+    }
+
+    char** result = new char*[TOKENS_AMOUNT];
+
+    char* token = new char[MAX_TOKENS_LENGTH];
+    token = strtok(str, delimiter);
+    size_t idx{0};
+
+    while (token != NULL)
+    {   
+        result[idx] = token;
+        token = strtok(NULL, delimiter);
+        ++idx;
+    }
 
     return result;
 }
 
-unsigned int* TokensToUnsignedInts(string* (&vectorOfTokens)) {
+unsigned int* TokensToUnsignedInts(char** vectorOfTokens) {
 
-    unsigned int* result = new unsigned int[3];
+    unsigned int* result = new unsigned int[TOKENS_AMOUNT];
 
-    for (size_t i{0}; i < 3; ++i) 
+    for (size_t i{0}; i < TOKENS_AMOUNT; ++i) 
     {   
-        string temp = vectorOfTokens[i];
+        char* temp = vectorOfTokens[i];
         result[i] = stoul(temp);
     }
 
@@ -323,7 +354,7 @@ unsigned int calculateAbsoluteDateDifferenceInDays(const unsigned int& date1, co
             }
 
             ++absoluteDateDifferenceInDays;
-            
+
         }
 
         return absoluteDateDifferenceInDays;
@@ -356,13 +387,16 @@ unsigned int calculateAbsoluteTimeDifferenceInSeconds(unsigned int hours1, unsig
         int differenceMinutes  = minutes1 - minutes2;
 
         if (hours2 > hours1) {
-            --daysDifference;
+            
+            if (daysDifference > 0)
+            {
+            --daysDifference;        
+            }
+            
             hours1 += HOURS_IN_A_DAY ;
         }
 
         int differenceHours    = hours1 - hours2;
-
-        cout << differenceHours << " " << differenceMinutes << " " << differenceSeconds << endl;
 
         return differenceHours * SECONDS_IN_AN_HOUR + differenceMinutes * SECONDS_IN_A_MINUTE + differenceSeconds;
     }
@@ -390,28 +424,28 @@ void printAbsoluteDifference(unsigned int absoluteDifferenceInSeconds) {
 
 int main() {
 
-    string inputDate1;
-    string inputTime1;
+    char    inputDate1[MAX_INPUT_DATE_SIZE];
+    char    inputTime1[MAX_INPUT_TIME_SIZE];
     cin >> inputDate1 >> inputTime1;
 
-    string inputDate2;
-    string inputTime2;
+    char    inputDate2[MAX_INPUT_DATE_SIZE];
+    char    inputTime2[MAX_INPUT_TIME_SIZE];
     cin >> inputDate2 >> inputTime2;
     
-    string* tokenizedDate1          = stringToArrayOfTokens(inputDate1);
+    char** tokenizedDate1           = stringToArrayOfTokens(inputDate1);
     unsigned int* dataDate1         = TokensToUnsignedInts(tokenizedDate1);
-    string* tokenizedTime1          = stringToArrayOfTokens(inputTime1);
+    char** tokenizedTime1           = stringToArrayOfTokens(inputTime1);
     unsigned int* dataTime1         = TokensToUnsignedInts(tokenizedTime1);
 
-    string* tokenizedDate2          = stringToArrayOfTokens(inputDate2);
+    char** tokenizedDate2           = stringToArrayOfTokens(inputDate2);
     unsigned int* dataDate2         = TokensToUnsignedInts(tokenizedDate2);
-    string* tokenizedTime2          = stringToArrayOfTokens(inputTime2);
+    char** tokenizedTime2           = stringToArrayOfTokens(inputTime2);
     unsigned int* dataTime2         = TokensToUnsignedInts(tokenizedTime2);
 
-    if (getLaterDate(dataDate1, dataTime1, dataDate2, dataTime1) == dataDate2) 
+    if (getLaterDate(dataDate1, dataTime1, dataDate2, dataTime2) == dataDate2) 
     {
-        swap(dataDate1, dataDate2);
-        swap(dataTime1, dataTime2);
+        std::swap(dataDate1, dataDate2);
+        std::swap(dataTime1, dataTime2);
     }
 
     unsigned int date1Date      = dataDate1[DATE_INDEX];
@@ -456,6 +490,6 @@ int main() {
     {
         cout << "Invalid date/time" << endl;
     }
-    
+
     return 0;
 }
