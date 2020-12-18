@@ -122,7 +122,7 @@ void printTimeDifference(const unsigned int& hours, const unsigned int& minutes)
     cout << endl;
 }
 
-void printExplaination(int wholeNumber, int *(&binaryTimeArray)) {
+void printExplaination(const int& wholeNumber, int *(&binaryTimeArray)) {
     cout << wholeNumber << " -> ";
     printBinaryTimeArray(binaryTimeArray);
     cout << " -> ";
@@ -136,7 +136,7 @@ unsigned int calculateAbsoluteDifferenceInMinutes(const unsigned int& hours1, co
     return abs((int) timeInMinutes1 - (int) timeInMinutes2);
 }
 
-void printAbsoluteDifference(unsigned int& absoluteDifferenceInMinutes) {
+void printAbsoluteDifference(const unsigned int& absoluteDifferenceInMinutes) {
     unsigned int absoluteDifferenceHours = absoluteDifferenceInMinutes / 60;
     unsigned int absoluteDifferenceMinutes = absoluteDifferenceInMinutes % 60;
     printTimeDifference(absoluteDifferenceHours, absoluteDifferenceMinutes);

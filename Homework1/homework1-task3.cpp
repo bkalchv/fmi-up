@@ -151,7 +151,7 @@ bool isValidTime(const unsigned int& hours, const unsigned int& minutes, const u
     return true;
 }
 
-unsigned int getMonthsDays(unsigned int month, unsigned int year) {
+unsigned int getMonthsDays(const unsigned int& month, const unsigned int& year) {
 
     if (isEven(month) && month <= 7)
     {    

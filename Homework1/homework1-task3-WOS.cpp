@@ -28,23 +28,6 @@ const unsigned int SECONDS_IN_A_MINUTE  = 60;
 const unsigned int MONTHS_IN_AN_YEAR    = 12;
 const unsigned int DAYS_IN_AN_YEAR      = 365;
 
-char* subString(const char* str, size_t fromIdx, size_t toIdx) {
-    
-    if (fromIdx < toIdx && fromIdx > 0 && toIdx > 0) 
-    {
-        char* result = new char[toIdx - fromIdx];
-
-        for (size_t i{fromIdx}; i < toIdx; ++i)
-        {
-            result[i - fromIdx] = str[i];
-        }
-
-        return result;
-    }
-
-    return nullptr;
-}
-
 int find(const char* str, char ch) {
 
     int idx{0};
@@ -182,7 +165,7 @@ bool isValidTime(const unsigned int& hours, const unsigned int& minutes, const u
     return true;
 }
 
-unsigned int getMonthsDays(unsigned int month, unsigned int year) {
+unsigned int getMonthsDays(const unsigned int& month, const unsigned int& year) {
 
     if (isEven(month) && month <= 7)
     {    
