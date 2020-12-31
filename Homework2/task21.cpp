@@ -195,8 +195,9 @@ int main() {
 
     cout << "Loading symbol: ";
     cin  >> loadingSymbol;
+
     cout << "Empty symbol: ";
-    cin  >> emptySymbol;
+    cin >> emptySymbol;
 
     cout << "Amount of loading sections: ";
     while (!(cin  >> loadingSections))
