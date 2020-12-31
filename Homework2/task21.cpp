@@ -167,8 +167,8 @@ int main() {
     char    showPercentageAnswer;
     char    loadingSymbol;
     char    emptySymbol;
-    size_t  loadingSections;
-    size_t  loadingTimeInSeconds;
+    int     loadingSections;
+    int     loadingTimeInSeconds;
 
     cout    << "Current progress: ";
     while (!(cin >> currentProgress) || !isValidInput(currentProgress))
@@ -204,19 +204,23 @@ int main() {
     cin.get(emptySymbol);
     
     cout << "Amount of loading sections: ";
-    while (!(cin  >> loadingSections))
+    cin  >> loadingSections;
+    while (loadingSections < 0)
     {   
         system("clear");
         cout << "Invalid input. Try again! (whole number > 0)" << endl;
         cout << "Amount of loading sections: ";
+        cin >> loadingSections;
     }
 
     cout << "Loading time: ";
-    while (!(cin >> loadingTimeInSeconds)) 
+    cin  >> loadingTimeInSeconds;
+    while (loadingTimeInSeconds < 0) 
     {
         system("clear");
         cout << "Invalid input. Try again! (whole number in seconds)" << endl;
         cout << "Loading time: ";
+        cin >> loadingTimeInSeconds;
     }
 
     oneFunctionToRuleThemAll(currentProgress, leftOpeningSymbol, rightOpeningSymbol, showPercentage, loadingSymbol, emptySymbol, loadingSections, loadingTimeInSeconds);
