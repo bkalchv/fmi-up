@@ -158,7 +158,6 @@ void oneFunctionToRuleThemAll(double currentProgress, char leftOpeningSymbol, ch
     printUpTo(loadingBar, loadingSymbol, currentProgress, showPercentage);
     loadingByTime(loadingBar, loadingTime, loadingSymbol, currentProgress, showPercentage);
 }
-// сегашен прогрес - число в интервала [0;1], затапващи символи (ляв и десен), булев флаг, указващ дали в бара да се показват процентите, запълващ символ и празен символ, целочислена бройка на деленията на целия бар
 
 int main() {
     double  currentProgress;
