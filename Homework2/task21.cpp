@@ -165,6 +165,7 @@ int main() {
     char    leftOpeningSymbol;
     char    rightOpeningSymbol;
     bool    showPercentage;
+    char    showPercentageAnswer;
     char    loadingSymbol;
     char    emptySymbol;
     size_t  loadingSections;
@@ -184,37 +185,39 @@ int main() {
     cout << "Closing symbol: ";
     cin >> rightOpeningSymbol;
 
-    cout << "Percentage representation? (1- yes; 0 - no)";
-    while (!(cin >> showPercentage) || (showPercentage != 1 && showPercentage != 0))
+    cout << "Percentage representation? (1- yes; 0 - no): ";
+    cin >> showPercentageAnswer;
+    while (showPercentageAnswer != '1' && showPercentageAnswer != '0')
     {
         system("clear");
         cout << "Invalid input. Try again!" << endl;
         cout << "Percentage representation? (1- yes; 0 - no)";
-        cin >> showPercentage;
+        cin  >> showPercentageAnswer;
     }
+    showPercentage = showPercentageAnswer == '1'; 
+    
 
     cout << "Loading symbol: ";
     cin  >> loadingSymbol;
 
     cout << "Empty symbol: ";
-    cin >> emptySymbol;
-
+    std::cin.ignore( std::numeric_limits<std::streamsize>::max(), '\n');
+    cin.get(emptySymbol);
+    
     cout << "Amount of loading sections: ";
     while (!(cin  >> loadingSections))
     {   
         system("clear");
         cout << "Invalid input. Try again! (whole number > 0)" << endl;
         cout << "Amount of loading sections: ";
-        cin >> loadingSections;
     }
 
-    cout << "Loading time: (whole number in seconds)";
+    cout << "Loading time: ";
     while (!(cin >> loadingTimeInSeconds)) 
     {
         system("clear");
         cout << "Invalid input. Try again! (whole number in seconds)" << endl;
         cout << "Loading time: ";
-        cin >> loadingSections;
     }
 
     oneFunctionToRuleThemAll(currentProgress, leftOpeningSymbol, rightOpeningSymbol, showPercentage, loadingSymbol, emptySymbol, loadingSections, loadingTimeInSeconds);
